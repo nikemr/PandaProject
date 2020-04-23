@@ -3,6 +3,7 @@ from direct.showbase.ShowBase import ShowBase
 from panda3d.core import WindowProperties
 from direct.actor.Actor import Actor
 from panda3d.core import AmbientLight
+
 from panda3d.core import Vec4
 from panda3d.core import DirectionalLight
 from panda3d.core import Vec4, Vec3
@@ -39,14 +40,14 @@ class Game(ShowBase):
         # Tilt the camera down by setting its pitch.
         self.camera.setP(-90)
         self.camera.reparentTo(self.tempActor)
-        #two cameras
-        # self.makeCamera(self.win, displayRegion = (0, 0.5, 0, 1))
-        # self.makeCamera(self.win, displayRegion = (0.5, 1, 0, 1))
-        # self.camList[1].reparentTo(self.tempActor)
-        # self.camList[1].setPos(-0.5, 10, 20)
+        
+        self.makeCamera(self.win, displayRegion = (0, 0.5, 0, 1))
+        self.makeCamera(self.win, displayRegion = (0.5, 1, 0, 1))
+        self.camList[1].reparentTo(self.tempActor)
+        self.camList[1].setPos(-0.5, 10, 20)
 
-        # self.camList[2].setPos(0.5, 0, 0)
-        # self.camList[2].reparentTo(render)
+        self.camList[2].setPos(0.5, 0, 0)
+        self.camList[2].reparentTo(render)
 
         #self.taskMgr.add(self.spinCameraTask, "SpinCameraTask")
         
@@ -136,6 +137,7 @@ class Game(ShowBase):
     def updateKeyMap(self, controlName, controlState):
         self.keyMap[controlName] = controlState
         print (controlName, "set to", controlState) 
+   
     def update(self, task):
         # Get the amount of time since the last update
         dt = globalClock.getDt()
@@ -153,16 +155,18 @@ class Game(ShowBase):
         if self.keyMap["shoot"]:
             print ("Zap!")
             #imm=self.win.getScreenshot().getRamImage()
+            self.win.saveScreenshotDefault('www')
             imm=self.win.getScreenshot().getRamImageAs("RGB")
-            print(imm)
+            #print(imm)
             np_buffer = np.array(imm, np.float32)
-        
-            print(np_buffer.shape)
+            
+            #print(np_buffer.shape)
             print(np_buffer[:-300])
             #list of Nodespaths
             #self.tempActor.ls()
-            self.render.ls()
+            #self.render.ls()
             #self.camera.ls()
+            #print(self.camList)
 
             
 
