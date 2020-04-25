@@ -98,7 +98,7 @@ class Game(ShowBase):
         numpy_image_data=np.array(texture.getRamImageAs("RGB"), np.float32)
         print(np.max(numpy_image_data[123456]))
 
-       
+        
         
 
         
@@ -108,7 +108,7 @@ class Game(ShowBase):
             
             return Task.cont
         #this really works because it saves the SC during rendering
-        self.win.getDisplayRegion(1).saveScreenshotDefault('www')
+        self.win.getDisplayRegion(1).saveScreenshotDefault('wwwr')
         print('matask Done')
         return Task.done   
         
