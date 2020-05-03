@@ -10,7 +10,7 @@ Starting from the simple setup in step1.py, we push things a little forward: now
 
 NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
 """
-from pandac.PandaModules import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32
+from panda3d.core import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32
 
 import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part

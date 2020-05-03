@@ -11,9 +11,10 @@ Mouse picking is the mouse pointer interaction with elements of the screen. We'l
 NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
 """
 from direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32, CollisionRay
-
-import direct.directbase.DirectStart
+from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32, CollisionRay
+from direct.showbase.ShowBase import ShowBase
+base=ShowBase()
+# import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
 import snipstuff
 
@@ -41,7 +42,10 @@ To biefly sum up what happen below, we create 2 interacting objects: a FROM obje
 base.cTrav=CollisionTraverser()
 collisionHandler = CollisionHandlerEvent()
 
-#** Differently from the previous steps, we change here a little bit our main FROM collider, using now a strange kind of geometry: a ray - you may see it as a laser ray the constantly shoot from the camera lenses toward the infinite. The following lines will settle up all of this.
+#** Differently from the previous steps, we change here a little bit our main FROM collider,
+#  using now a strange kind of geometry: a ray - you may see it as a laser ray the constantly
+#  shoot from the camera lenses toward the infinite. The following lines will settle up all of this.
+
 pickerNode=CollisionNode('mouseraycnode')
 pickerNP=base.camera.attachNewNode(pickerNode)
 pickerRay=CollisionRay()
@@ -121,4 +125,4 @@ DO.accept('mouse1-up', mousePick, ['up'])
 taskMgr.add(rayupdate, "updatePicker")
 
 splash.destroy()
-run()
+base.run()

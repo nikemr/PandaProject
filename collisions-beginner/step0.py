@@ -10,7 +10,7 @@ This is the first very step to roughly undestand the panda3d collison system pri
 In the scene there are two balls - they are found by default in the panda3D package; they are just two textured spheres by 2 unit diameter.
 In this snippet, clicking the left button and moving the mouse to reach the other ball will fire a collision event catched via the usual panda3d task handling.
 """
-from pandac.PandaModules import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser
+from panda3d.core import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser
 
 import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
@@ -86,4 +86,4 @@ taskMgr.add(traverseTask, "tsk_traverse")
 
 #** now we may start the show
 splash.destroy()
-run()
+base.run()

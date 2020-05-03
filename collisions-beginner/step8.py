@@ -6,17 +6,27 @@ Level: BEGINNER
 
 We're going now to start to discover what panda3d got to offer about this subject and how affect collision handling.
 
-NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
+NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't 
+find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
 """
 import random
+from panda3d.physics import PhysicsCollisionHandler
+from panda3d.physics import ForceNode
+from panda3d.physics import LinearVectorForce
+from panda3d.physics import ActorNode
 from direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import *
+from panda3d.core import *
 from direct.interval.IntervalGlobal import *
 
 loadPrcFileData("", """sync-video 0
 """
 )
-import direct.directbase.DirectStart
+# import direct.directbase.DirectStart
+
+from direct.showbase.ShowBase import ShowBase
+base=ShowBase()
+
+
 #** snippet support routines - not concerning the tutorial part
 import snipstuff
 
@@ -47,7 +57,11 @@ base.enableParticles()
 # here there is the handler to use this time to manage collisions.
 collisionHandler = PhysicsCollisionHandler()
 
-#** This is the first time we see this collider: it is used mainly to define a flat infinite plane surface - it is very reliable and stable and gives high fame rate performances so use it as much as you can. Note that we specify 2 corners of the plane of just 1 unit per side but this collider will collide with everithing as it was an infinite plane anyhow. Note that there is no need to set anything further for it.
+#** This is the first time we see this collider: it is used mainly to define a flat infinite plane surface - 
+# it is very reliable and stable and gives high fame rate performances so use it as much as you can. 
+# Note that we specify 2 corners of the plane of just 1 unit per side but this collider will collide
+#  with everithing as it was an infinite plane anyhow. Note that there is no need to set anything further for it.
+
 cp = CollisionPlane(Plane(Vec3(0, 0, 1), Point3(0, 0, 0)))
 planeNP = base.render.attachNewNode(CollisionNode('planecnode'))
 planeNP.node().addSolid(cp)
@@ -57,16 +71,18 @@ planeNP.show()
 globalforcesFN=ForceNode('world-forces')
 globalforcesFNP=base.render.attachNewNode(globalforcesFN)
 # then we set a linear force that will act in Z axis-drag-down-force of 9.81 units per second.
-globalforcesGravity=LinearVectorForce(0,0,-9.81)
+globalforcesGravity=LinearVectorForce(0,0,-5.81)
 globalforcesFN.addForce(globalforcesGravity)
 # and then we assign this force to the physics manager. By the way, we never defined that manager, but it was made automatically when we called base.enableParticles()
 base.physicsMgr.addLinearForce(globalforcesGravity)
 
-#** Inside this function we'll load a model and assign a collide ball to it, suitable to collide with everything interacting in the physics environment. I put it in a function because I'll going to call it several times. It will return at last the topmost nodepath of its structure so that we may drive each ball around.
+#** Inside this function we'll load a model and assign a collide ball to it, suitable to collide with everything interacting in the physics environment.
+#  I put it in a function because I'll going to call it several times. It will return at last the topmost nodepath of its structure so that we may drive each ball around.
 def phyball_dispenser(modelname, scale=1.):
   # first off we gotta define the topmost node that should be a PandaNode wrapped into a nodepath - this is mandatory cos if we try to directly use the  Actornode defined below, we'll face inexpected behavior manipulating the object.
   ballNP=NodePath(PandaNode("phisicsball"))
-  # we then need an ActorNode - this is required when playing with physics cos it got an interface suitable for this task while the usual nodepath ain't. Then we'll stick it to the main nodepath we'll put into the scene render node, wrapped into a nodepath of course.
+  # we then need an ActorNode - this is required when playing with physics cos it got an interface suitable for this
+  #  task while the usual nodepath ain't. Then we'll stick it to the main nodepath we'll put into the scene render node, wrapped into a nodepath of course.
   ballAN=ActorNode("ballactnode")
   ballANP=ballNP.attachNewNode(ballAN)
   ballmodel=loader.loadModel(modelname)
@@ -78,7 +94,9 @@ def phyball_dispenser(modelname, scale=1.):
   ballCollider.node().addSolid(CollisionSphere(0,0,0, 1*scale))
   # now it's a good time to dip our object into the physics environment (the Actornode btw)
   base.physicsMgr.attachPhysicalNode(ballAN)
-  # then tell to the PhysicsCollisionHandler what are its collider and main nodepath to handle - this means that the ballANP nodepath will be phisically moved to react to all the physics forces we applied in the environment (the gravity force in the specific). Note that due we are using a particular collison handler (PhysicsCollisionHandler) we cannot pass a common nodepath as we did in all the previous steps but a nodepath-wrapped Actornode.
+  # then tell to the PhysicsCollisionHandler what are its collider and main nodepath to handle - 
+  # this means that the ballANP nodepath will be phisically moved to react to all the physics forces we applied in the environment (the gravity force in the specific). 
+  # Note that due we are using a particular collison handler (PhysicsCollisionHandler) we cannot pass a common nodepath as we did in all the previous steps but a nodepath-wrapped Actornode.
   collisionHandler.addCollider(ballCollider, ballANP)
   # and inform the main traverser as well
   base.cTrav.addCollider(ballCollider, collisionHandler)
@@ -147,4 +165,4 @@ steering.start()
 
 #** let's start the show
 splash.destroy()
-run()
+base.run()

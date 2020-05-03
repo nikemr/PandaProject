@@ -11,9 +11,10 @@ We push the step5.py snippet forward performing the mouse picking in a complex s
 NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
 """
 from direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32, CollisionRay
-
-import direct.directbase.DirectStart
+from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32, CollisionRay
+from direct.showbase.ShowBase import ShowBase
+base=ShowBase()
+# import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
 import snipstuff
 
@@ -33,7 +34,10 @@ base.disableMouse()
 #=========================================================================
 # Main
 """
-To biefly sum up what happen next, we'll make interact an invisible collision ray with two kinds of INTO objects: smileys and frowneys. The FROM ray will generate collision events as soon as touch each INTO object moving the mouse pointer over, routing toward different function handlers depending on the object group the object belongs (smiley or frowney). All of this is efficiently achieved using tags and special collision patterns, using therefore a slightly different setup from what we used to see so far in previous steps.
+To biefly sum up what happen next, we'll make interact an invisible collision ray with two kinds of INTO objects:
+ smileys and frowneys. The FROM ray will generate collision events as soon as touch each INTO object moving the mouse pointer over,
+  routing toward different function handlers depending on the object group the object belongs (smiley or frowney). All of this is
+   efficiently achieved using tags and special collision patterns, using therefore a slightly different setup from what we used to see so far in previous steps.
 """
 #=========================================================================
 
@@ -47,7 +51,8 @@ pickerNP=base.camera.attachNewNode(pickerNode)
 pickerRay=CollisionRay()
 pickerNode.addSolid(pickerRay)
 
-#** This is new stuff: we set here a so called 'tag' for the ray - its purpose is to make the ray recognizable in a different event pattern matching situation from what we are used to use so far. Just note the first parameter is the main object grouping. See details below setting the patterns.
+#** This is new stuff: we set here a so called 'tag' for the ray - its purpose is to make the ray recognizable in a different event pattern matching
+#  situation from what we are used to use so far. Just note the first parameter is the main object grouping. See details below setting the patterns.
 pickerNode.setTag('rays','ray1')
 base.cTrav.addCollider(pickerNP, collisionHandler)
 
@@ -113,7 +118,7 @@ def collideAgainBalls(entry):
   global pickingEnabledOject
 
   # since this function is called constantly while the mousepointer is over the ball, with this condition check we'll change things just the first time we are over a different ball than before.
-  if entry.getIntoNodePath().getParent() <> pickingEnabledOject:
+  if entry.getIntoNodePath().getParent() != pickingEnabledOject:
     np_from=entry.getFromNodePath()
     np_into=entry.getIntoNodePath()
     snipstuff.info_message(

@@ -3,8 +3,8 @@
 import sys, time
 
 from direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import AmbientLight, DirectionalLight, PerspectiveLens, Spotlight
-from pandac.PandaModules import TextNode, TransparencyAttrib, Vec3
+from panda3d.core import AmbientLight, DirectionalLight, PerspectiveLens, Spotlight
+from panda3d.core import TextNode, TransparencyAttrib, Vec3
 from direct.task import Task
 from direct.gui.OnscreenImage import OnscreenImage
 from direct.gui.OnscreenText import OnscreenText
@@ -69,7 +69,7 @@ ESC=exit
 #=====================================================================
 #
 def info_message(message):
-  if infotext['message'].getText() <> message:
+  if infotext['message'].getText() != message:
     infotext['message'].setText(message)
 
 #=====================================================================
@@ -155,7 +155,7 @@ class avatar_steer(DirectObject):
     ###self.avatar.setPos(self.avatar.getPos()+vel)
     self.avatar.setFluidPos(self.avatar.getPos()+vel)
     if self.lockY != None: self.avatar.setY(self.lockY)
-    if (vel <> Vec3.zero()): self.walk(dt, vel)
+    if (vel != Vec3.zero()): self.walk(dt, vel)
     if self.keys['jump']: self.jump(dt)
 
   def down(self, move): return Vec3(0,-move,0)

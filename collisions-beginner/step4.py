@@ -12,11 +12,12 @@ Beside we got a more complex setup that double the elements involved, it follow 
 NOTE If you won't find here some line of code explained, probably you missed it in the previous steps - if you don't find there as well though, or still isn't clear for you, browse at http://www.panda3d.org/phpbb2/viewtopic.php?t=7918 and post your issue to the thread.
 """
 from direct.showbase.DirectObject import DirectObject
-from pandac.PandaModules import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32
-from pandac.PandaModules import VBase4, AmbientLight, DirectionalLight
+from panda3d.core import CollisionHandlerEvent, CollisionNode, CollisionSphere, CollisionTraverser, BitMask32
+from panda3d.core import VBase4, AmbientLight, DirectionalLight
 from direct.gui.OnscreenText import OnscreenText
-
-import direct.directbase.DirectStart
+from direct.showbase.ShowBase import ShowBase
+base=ShowBase()
+# import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
 import snipstuff
 
@@ -119,4 +120,4 @@ DO.accept('collider_brkheart-into-frowneycnode', collideEventIn)
 DO.accept('collider_brkheart-out-frowneycnode', collideEventOut)
 
 splash.destroy()
-run()
+base.run()

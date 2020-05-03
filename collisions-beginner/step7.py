@@ -12,7 +12,9 @@ NOTE If you won't find here some line of code explained, probably you missed it 
 """
 import random
 
-import direct.directbase.DirectStart
+from direct.showbase.ShowBase import ShowBase
+base=ShowBase()
+# import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
 import snipstuff
 

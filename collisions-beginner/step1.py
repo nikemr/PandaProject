@@ -10,7 +10,7 @@ In this step we're going to make something quite similar the first one but with 
 In this step's scene you'll see then a ball and a heart - clicking the left button and moving the mouse to reach the ball will fire a collision.
 Beside there are egg models ready to go, I suggest to open the models.blend file of this package and check what's inside, trying also to export the two models from scratch to see how it works the whole thing.
 """
-from pandac.PandaModules import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser
+from panda3d.core import CollisionHandlerQueue, CollisionNode, CollisionSphere, CollisionTraverser
 
 import direct.directbase.DirectStart
 #** snippet support routines - off the tutorial part
