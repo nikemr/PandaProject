@@ -1,2 +1,2 @@
 # PandaProject
-My Panda3d Adventure
+My Panda3d SandBox
